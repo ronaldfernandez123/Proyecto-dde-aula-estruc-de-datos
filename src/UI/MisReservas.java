@@ -111,76 +111,76 @@ private void editarReservaSeleccionada() {
 
     DefaultTableModel modelo = (DefaultTableModel) tablaReservas.getModel();
 
-    // Obtener datos actuales de la fila seleccionada
-    String nombresAntiguo = modelo.getValueAt(fila, 0).toString();
-    String apellidosAntiguo = modelo.getValueAt(fila, 1).toString();
-    String tipoIDAntiguo = modelo.getValueAt(fila, 2).toString();
+    // Obtener identificadores antiguos para encontrar la reserva original
     String documentoAntiguo = modelo.getValueAt(fila, 3).toString();
-    String lugarAntiguo = modelo.getValueAt(fila, 4).toString();
-    String habitacionAntigua = modelo.getValueAt(fila, 5).toString();
-    String checkInAntiguoStr = modelo.getValueAt(fila, 6).toString();
-    String checkOutAntiguoStr = modelo.getValueAt(fila, 7).toString();
-    String cantidadPersonasStr = modelo.getValueAt(fila, 8).toString();
-    String habitacionesStr = modelo.getValueAt(fila, 9).toString();
+    String checkInAntiguoStr = modelo.getValueAt(fila, 8).toString(); // índice según tu tabla
 
-    // Pedir nuevos datos al usuario (puedes adaptar a tus componentes de entrada)
-    String nuevosNombres = JOptionPane.showInputDialog(this, "Editar nombres:", nombresAntiguo);
-    String nuevosApellidos = JOptionPane.showInputDialog(this, "Editar apellidos:", apellidosAntiguo);
-    String nuevoTipoID = JOptionPane.showInputDialog(this, "Editar tipo de ID:", tipoIDAntiguo);
-    String nuevoDocumento = JOptionPane.showInputDialog(this, "Editar documento:", documentoAntiguo);
-    String nuevoLugar = JOptionPane.showInputDialog(this, "Editar lugar:", lugarAntiguo);
-    String nuevaHabitacion = JOptionPane.showInputDialog(this, "Editar habitación:", habitacionAntigua);
-    String nuevoCheckInStr = JOptionPane.showInputDialog(this, "Editar Check-In (dd/MM/yyyy):", checkInAntiguoStr);
-    String nuevoCheckOutStr = JOptionPane.showInputDialog(this, "Editar Check-Out (dd/MM/yyyy):", checkOutAntiguoStr);
-    String nuevaCantidadPersonasStr = JOptionPane.showInputDialog(this, "Editar cantidad de personas:", cantidadPersonasStr);
-    String nuevaHabitacionesStr = JOptionPane.showInputDialog(this, "Editar habitaciones:", habitacionesStr);
+    // Obtener los nuevos datos desde los campos de entrada
+    String nuevosNombres = txtNombres.getText();
+    String nuevosApellidos = txtApellidos.getText();
+    String nuevoTipoID = cbxTipoId.getSelectedItem().toString();
+    String nuevoDocumento = txtDocumento.getText();
+    String nuevoLugar = cbxLugar.getSelectedItem().toString();
+    String nuevaHabitacion = cbxNumeroHabitacion.getSelectedItem().toString();
 
-    if (nuevosNombres != null && nuevosApellidos != null && nuevoTipoID != null &&
-        nuevoDocumento != null && nuevoLugar != null && nuevaHabitacion != null &&
-        nuevoCheckInStr != null && nuevoCheckOutStr != null &&
-        nuevaCantidadPersonasStr != null && nuevaHabitacionesStr != null) {
+    Date nuevoCheckIn = jCalendarCheckIn.getDate();
+    Date nuevoCheckOut = jCalendarCheckOut.getDate();
 
-        try {
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-            Date nuevoCheckIn = formatoFecha.parse(nuevoCheckInStr);
-            Date nuevoCheckOut = formatoFecha.parse(nuevoCheckOutStr);
+    int nuevaCantidadPersonas;
+    int nuevaHabitaciones;
 
-            int nuevaCantidadPersonas = Integer.parseInt(nuevaCantidadPersonasStr);
-            int nuevaHabitaciones = Integer.parseInt(nuevaHabitacionesStr);
-
-            Reserva reservaActualizada = new Reserva(
-                nuevosNombres,
-                nuevosApellidos,
-                nuevoTipoID,
-                nuevoDocumento,
-                nuevoLugar,
-                nuevaHabitacion,
-                nuevoCheckIn,
-                nuevoCheckOut,
-                nuevaCantidadPersonas,
-                nuevaHabitaciones
-            );
-
-            GestorReservas gestor = new GestorReservas();
-
-            // Asegúrate que editarReserva recibe el documento y fecha anterior para identificar la reserva a modificar
-            Date checkInAntiguo = formatoFecha.parse(checkInAntiguoStr);
-            gestor.editarReserva(documentoAntiguo, checkInAntiguo, reservaActualizada);
-
-            cargarReservasEnTabla();
-
-            JOptionPane.showMessageDialog(this, "Reserva actualizada correctamente.");
-
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Error al convertir las fechas. Use formato dd/MM/yyyy.");
-            ex.printStackTrace();
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Cantidad de personas o habitaciones inválida. Deben ser números.");
-            ex.printStackTrace();
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "Edición cancelada o datos incompletos.");
+    try {
+        nuevaCantidadPersonas = Integer.parseInt(txtCantidadPersonas.getText());
+        nuevaHabitaciones = Integer.parseInt(txtHabitaciones.getText());
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Las cantidades deben ser números enteros válidos.");
+        return;
     }
+
+    // Validar fechas
+    if (nuevoCheckIn == null || nuevoCheckOut == null) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar fechas válidas.");
+        return;
+    }
+
+    // Parsear la fecha antigua para buscar la reserva original
+    Date checkInAntiguo = null;
+    try {
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        checkInAntiguo = formatoFecha.parse(checkInAntiguoStr);
+    } catch (ParseException e) {
+        JOptionPane.showMessageDialog(this, "Error al interpretar la fecha original: " + e.getMessage());
+        return;
+    }
+
+    // Crear nueva reserva
+    Reserva reservaActualizada = new Reserva(
+        nuevosNombres,
+        nuevosApellidos,
+        nuevoTipoID,
+        nuevoDocumento,
+        nuevoLugar,
+        nuevaHabitacion,
+        nuevoCheckIn,
+        nuevoCheckOut,
+        nuevaCantidadPersonas,
+        nuevaHabitaciones
+    );
+
+    // Actualizar usando DAO
+    ReservaDAO dao = new ReservaDAO();
+    boolean actualizada = dao.editarReserva(documentoAntiguo, checkInAntiguo, reservaActualizada);
+
+    if (actualizada) {
+        JOptionPane.showMessageDialog(this, "Reserva actualizada correctamente.");
+    } else {
+        // Si no se encuentra la reserva para actualizar, la agregamos como nueva
+        dao.agregarReserva(reservaActualizada);
+        JOptionPane.showMessageDialog(this, "Reserva no encontrada, se agregó como nueva.");
+    }
+
+    // Refrescar la tabla
+    cargarReservasEnTabla();
 }
 
 
@@ -237,6 +237,9 @@ private void editarReservaSeleccionada() {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaReservas = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        BuscarIDResr = new javax.swing.JTextField();
+        buscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -460,6 +463,15 @@ private void editarReservaSeleccionada() {
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reservas.png"))); // NOI18N
 
+        jLabel14.setText("Buscar Reserva:");
+
+        buscar.setText("Buscar");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -468,24 +480,32 @@ private void editarReservaSeleccionada() {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 887, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton1)
                         .addGap(142, 142, 142)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BuscarIDResr, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnEliminar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(28, 28, 28)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                                            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -503,12 +523,16 @@ private void editarReservaSeleccionada() {
                         .addGap(18, 18, 18)
                         .addComponent(btnActualizar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE))
+                        .addComponent(btnEliminar))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(BuscarIDResr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscar))
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -517,11 +541,109 @@ private void editarReservaSeleccionada() {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        eliminarReservaSeleccionada();
+      String documento = txtDocumento.getText().trim();
+    Date checkIn = jCalendarCheckIn.getDate();
+
+    if (documento.isEmpty() || checkIn == null) {
+        JOptionPane.showMessageDialog(this, "Debe buscar y seleccionar una reserva antes de eliminar.");
+        return;
+    }
+
+    int confirmacion = JOptionPane.showConfirmDialog(this,
+            "¿Está seguro de eliminar esta reserva?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION);
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        ReservaDAO dao = new ReservaDAO();
+        dao.eliminarReserva(documento, checkIn);
+
+        // Limpiar campos del formulario
+        txtNombres.setText("");
+        txtApellidos.setText("");
+        cbxTipoId.setSelectedIndex(0);
+        txtDocumento.setText("");
+        cbxLugar.setSelectedIndex(0);
+        cbxNumeroHabitacion.setSelectedIndex(0);
+        txtCantidadPersonas.setText("");
+        txtHabitaciones.setText("");
+        jCalendarCheckIn.setDate(null);
+        jCalendarCheckOut.setDate(null);
+
+        // Actualizar tabla
+        cargarReservasEnTabla();
+
+        JOptionPane.showMessageDialog(this, "Reserva eliminada correctamente.");
+    }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    String documentoAntiguo = txtDocumento.getText().trim();
+    Date checkInAntiguo = jCalendarCheckIn.getDate();
 
+    if (documentoAntiguo.isEmpty() || checkInAntiguo == null) {
+        JOptionPane.showMessageDialog(this, "Debe buscar y seleccionar una reserva antes de actualizar.");
+        return;
+    }
+
+    try {
+        // Obtener nuevos datos del formulario
+        String nombres = txtNombres.getText().trim();
+        String apellidos = txtApellidos.getText().trim();
+        String tipoID = cbxTipoId.getSelectedItem().toString();
+        String documento = txtDocumento.getText().trim();
+        String lugar = cbxLugar.getSelectedItem().toString();
+        String habitacion = cbxNumeroHabitacion.getSelectedItem().toString();
+        int cantidadPersonas = Integer.parseInt(txtCantidadPersonas.getText().trim());
+        int habitaciones = Integer.parseInt(txtHabitaciones.getText().trim());
+        Date nuevoCheckIn = jCalendarCheckIn.getDate();
+        Date nuevoCheckOut = jCalendarCheckOut.getDate();
+
+        if (cantidadPersonas <= 0 || habitaciones <= 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad de personas y habitaciones debe ser positiva.");
+            return;
+        }
+
+        // Validar número máximo de habitaciones según cantidad de personas
+        int maxHabitaciones = cantidadPersonas <= 4 ? 1 :
+                              cantidadPersonas <= 8 ? 2 :
+                              cantidadPersonas <= 12 ? 3 : -1;
+        if (maxHabitaciones == -1) {
+            JOptionPane.showMessageDialog(this, "No se permiten reservas para más de 12 personas.");
+            return;
+        }
+        if (habitaciones > maxHabitaciones) {
+            JOptionPane.showMessageDialog(this, "Para " + cantidadPersonas + " personas, máximo " + maxHabitaciones + " habitaciones.");
+            return;
+        }
+
+        // Crear objeto Reserva actualizado
+        Reserva reservaActualizada = new Reserva(
+            nombres,
+            apellidos,
+            tipoID,
+            documento,
+            lugar,
+            habitacion,
+            nuevoCheckIn,
+            nuevoCheckOut,
+            cantidadPersonas,
+            habitaciones
+        );
+
+        ReservaDAO dao = new ReservaDAO();
+        dao.editarReserva(documentoAntiguo, checkInAntiguo, reservaActualizada);
+
+        cargarReservasEnTabla();
+
+        JOptionPane.showMessageDialog(this, "Reserva actualizada correctamente.");
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para personas y habitaciones.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al actualizar la reserva.");
+        e.printStackTrace();
+    }
 
         // TODO add your handling code here:
         cargarReservasEnTabla();
@@ -535,7 +657,74 @@ private void editarReservaSeleccionada() {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        editarReservaSeleccionada();
+
+    String documentoAntiguo = txtDocumento.getText().trim();
+    Date checkInAntiguo = jCalendarCheckIn.getDate();
+
+    if (documentoAntiguo.isEmpty() || checkInAntiguo == null) {
+        JOptionPane.showMessageDialog(this, "Debe buscar y seleccionar una reserva antes de editar.");
+        return;
+    }
+
+    try {
+        // Obtener nuevos datos del formulario
+        String nombres = txtNombres.getText().trim();
+        String apellidos = txtApellidos.getText().trim();
+        String tipoID = cbxTipoId.getSelectedItem().toString();
+        String documento = txtDocumento.getText().trim();
+        String lugar = cbxLugar.getSelectedItem().toString();
+        String habitacion = cbxNumeroHabitacion.getSelectedItem().toString();
+        int cantidadPersonas = Integer.parseInt(txtCantidadPersonas.getText().trim());
+        int habitaciones = Integer.parseInt(txtHabitaciones.getText().trim());
+        Date nuevoCheckIn = jCalendarCheckIn.getDate();
+        Date nuevoCheckOut = jCalendarCheckOut.getDate();
+
+        if (cantidadPersonas <= 0 || habitaciones <= 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad de personas y habitaciones debe ser positiva.");
+            return;
+        }
+
+        // Validar número máximo de habitaciones según cantidad de personas
+        int maxHabitaciones = cantidadPersonas <= 4 ? 1 :
+                              cantidadPersonas <= 8 ? 2 :
+                              cantidadPersonas <= 12 ? 3 : -1;
+        if (maxHabitaciones == -1) {
+            JOptionPane.showMessageDialog(this, "No se permiten reservas para más de 12 personas.");
+            return;
+        }
+        if (habitaciones > maxHabitaciones) {
+            JOptionPane.showMessageDialog(this, "Para " + cantidadPersonas + " personas, máximo " + maxHabitaciones + " habitaciones.");
+            return;
+        }
+
+        // Crear objeto Reserva actualizado
+        Reserva reservaActualizada = new Reserva(
+            nombres,
+            apellidos,
+            tipoID,
+            documento,
+            lugar,
+            habitacion,
+            nuevoCheckIn,
+            nuevoCheckOut,
+            cantidadPersonas,
+            habitaciones
+        );
+
+        ReservaDAO dao = new ReservaDAO();
+        dao.editarReserva(documentoAntiguo, checkInAntiguo, reservaActualizada);
+
+        cargarReservasEnTabla();
+
+        JOptionPane.showMessageDialog(this, "Reserva editada correctamente.");
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para personas y habitaciones.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al editar la reserva.");
+        e.printStackTrace();
+    }
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
@@ -676,6 +865,56 @@ private String safeToString(DefaultTableModel model, int fila, int columna) {
     return "";
     }//GEN-LAST:event_tablaReservasMouseClicked
 
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+
+          String docBuscado = BuscarIDResr.getText().trim();
+
+    if (docBuscado.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Ingrese un documento para buscar.");
+        return;
+    }
+
+    ReservaDAO dao = new ReservaDAO();
+    List<Reserva> reservas = dao.cargarReservas();
+
+    boolean encontrada = false;
+
+    for (int i = 0; i < reservas.size(); i++) {
+        Reserva r = reservas.get(i);
+
+        if (r.getDocumento().equalsIgnoreCase(docBuscado)) {
+            // Cargar en los campos
+            txtNombres.setText(r.getNombres());
+            txtApellidos.setText(r.getApellidos());
+            cbxTipoId.setSelectedItem(r.getTipoIdentificacion());
+            txtDocumento.setText(r.getDocumento());
+            cbxLugar.setSelectedItem(r.getLugar());
+            cbxNumeroHabitacion.setSelectedItem(r.getHabitacion());
+            txtCantidadPersonas.setText(String.valueOf(r.getCantidadPersonas()));
+            txtHabitaciones.setText(String.valueOf(r.getHabitaciones()));
+            jCalendarCheckIn.setDate(r.getCheckIn());
+            jCalendarCheckOut.setDate(r.getCheckOut());
+
+            // Seleccionar la fila en la tabla
+            DefaultTableModel modelo = (DefaultTableModel) tablaReservas.getModel();
+            for (int fila = 0; fila < modelo.getRowCount(); fila++) {
+                if (modelo.getValueAt(fila, 3).equals(docBuscado)) {
+                    tablaReservas.setRowSelectionInterval(fila, fila);
+                    break;
+                }
+            }
+
+            encontrada = true;
+            break;
+        }
+    }
+
+    if (!encontrada) {
+        JOptionPane.showMessageDialog(this, "No se encontró ninguna reserva con ese documento.");
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -712,10 +951,12 @@ private String safeToString(DefaultTableModel model, int fila, int columna) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField BuscarIDResr;
     private javax.swing.JButton Guardar;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton buscar;
     private javax.swing.JComboBox<String> cbxLugar;
     private javax.swing.JComboBox<String> cbxNumeroHabitacion;
     private javax.swing.JComboBox<String> cbxTipoId;
@@ -728,6 +969,7 @@ private String safeToString(DefaultTableModel model, int fila, int columna) {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -747,5 +989,9 @@ private String safeToString(DefaultTableModel model, int fila, int columna) {
     private javax.swing.JTextField txtNombres;
     // End of variables declaration//GEN-END:variables
 
+    
+    public void vaciar (){
+    
+    }
     
 }

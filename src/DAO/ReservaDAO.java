@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 public class ReservaDAO {
 
-    private static final String RUTA_ARCHIVO = "reservas.json";
+    private static final String RUTA_ARCHIVO = "C:\\Users\\SARA\\Documents\\NetBeansProjects\\Proyecto-Clase\\src\\ResourcesUsuario\\Reservas.json";
     private Gson gson;
 
     public ReservaDAO() {
@@ -27,7 +28,7 @@ public class ReservaDAO {
                 return new ArrayList<>();
             }
             BufferedReader br = new BufferedReader(new FileReader(archivo));
-            Type tipoLista = new TypeToken<List<Reserva>>(){}.getType();
+            Type tipoLista = new TypeToken<List<Reserva>>() {}.getType();
             List<Reserva> reservas = gson.fromJson(br, tipoLista);
             br.close();
             return reservas != null ? reservas : new ArrayList<>();
@@ -73,27 +74,49 @@ public class ReservaDAO {
     }
 
     // Edita una reserva existente identificada por documento y fecha de check-in
-    public void editarReserva(String documentoAntiguo, Date checkInAntiguo, Reserva reservaActualizada) {
-        List<Reserva> reservas = cargarReservas();
-        boolean encontrado = false;
+    public boolean editarReserva(String documentoAntiguo, Date checkInAntiguo, Reserva reservaActualizada) {
+    List<Reserva> reservas = cargarReservas();
+    boolean encontrado = false;
 
-        for (int i = 0; i < reservas.size(); i++) {
-            Reserva r = reservas.get(i);
+    for (int i = 0; i < reservas.size(); i++) {
+        Reserva r = reservas.get(i);
 
-            if (r.getDocumento().equals(documentoAntiguo) && r.getCheckIn().equals(checkInAntiguo)) {
-                reservas.set(i, reservaActualizada);
-                encontrado = true;
-                break;
-            }
-        }
-
-        if (encontrado) {
-            guardarReservas(reservas);
-        } else {
-            System.out.println("No se encontró la reserva para editar.");
+        if (r.getDocumento().equals(documentoAntiguo) &&
+            r.getCheckIn().compareTo(checkInAntiguo) == 0) {
+            reservas.set(i, reservaActualizada);
+            encontrado = true;
+            break;
         }
     }
-    
-    
+
+    if (encontrado) {
+        guardarReservas(reservas);
+        System.out.println("Reserva actualizada correctamente.");
+    } else {
+        System.out.println("No se encontró la reserva para editar.");
+    }
+
+    return encontrado;
 }
 
+    // Alias para editarReserva (actualizar)
+    public void actualizarReserva(String documentoAntiguo, Date checkInAntiguo, Reserva nuevaReserva) {
+        editarReserva(documentoAntiguo, checkInAntiguo, nuevaReserva);
+    }
+
+    // Elimina una reserva existente identificada por documento y fecha de check-in
+    public void eliminarReserva(String documento, Date checkIn) {
+        List<Reserva> reservas = cargarReservas();
+        boolean eliminado = reservas.removeIf(r ->
+                r.getDocumento().equals(documento) &&
+                r.getCheckIn().equals(checkIn)
+        );
+
+        if (eliminado) {
+            guardarReservas(reservas);
+            System.out.println("Reserva eliminada correctamente.");
+        } else {
+            System.out.println("No se encontró la reserva para eliminar.");
+        }
+    }
+}
