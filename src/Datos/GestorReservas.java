@@ -16,24 +16,21 @@ import com.google.gson.reflect.TypeToken;
 import Modelo.Reserva;
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class GestorReservas {
+
     private static final String ARCHIVO = "data/reservas.json";
     private final Gson gson = new Gson();
 
-    // Cargar todas las reservas desde el archivo JSON
-    public List<Reserva> obtenerTodasLasReservas() {
-        List<Reserva> reservas = new ArrayList<>();
+    private ListaReservas cargarLista() {
+        ListaReservas lista = new ListaReservas();
+
         try {
             File archivo = new File(ARCHIVO);
             if (!archivo.exists()) {
                 File carpeta = archivo.getParentFile();
-                if (carpeta != null && !carpeta.exists()) {
-                    carpeta.mkdirs();
-                }
+                if (carpeta != null && !carpeta.exists()) carpeta.mkdirs();
                 archivo.createNewFile();
                 try (FileWriter writer = new FileWriter(archivo)) {
                     writer.write("[]");
@@ -41,91 +38,46 @@ public class GestorReservas {
             }
 
             try (Reader reader = new FileReader(archivo)) {
-                Type tipoLista = new TypeToken<ArrayList<Reserva>>() {}.getType();
-                reservas = gson.fromJson(reader, tipoLista);
-                if (reservas == null) reservas = new ArrayList<>();
+                Type tipoLista = new TypeToken<List<Reserva>>() {}.getType();
+                List<Reserva> temp = gson.fromJson(reader, tipoLista);
+                if (temp != null) {
+                    for (Reserva r : temp) lista.agregar(r);
+                }
             }
+
         } catch (IOException e) {
             System.out.println("Error al leer reservas: " + e.getMessage());
         }
-        return reservas;
+        return lista;
     }
 
-    // Guardar todas las reservas en el archivo
-    private void guardarReservas(List<Reserva> reservas) {
+    private void guardarLista(ListaReservas lista) {
         try (Writer writer = new FileWriter(ARCHIVO)) {
-            gson.toJson(reservas, writer);
+            gson.toJson(lista.convertirListaJava(), writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Agregar una nueva reserva
-    public void agregarReserva(Reserva nuevaReserva) {
-        List<Reserva> reservas = obtenerTodasLasReservas();
-        reservas.add(nuevaReserva);
-        guardarReservas(reservas);
+    public void agregarReserva(Reserva nueva) {
+        ListaReservas lista = cargarLista();
+        lista.agregar(nueva);
+        guardarLista(lista);
     }
 
-    // Obtener reservas filtradas por documento
-    public List<Reserva> obtenerReservasPorDocumento(String documento) {
-        List<Reserva> resultado = new ArrayList<>();
-        List<Reserva> todas = obtenerTodasLasReservas();
-
-        for (Reserva r : todas) {
-            if (r.getDocumento().equals(documento)) {
-                resultado.add(r);
-            }
-        }
-        return resultado;
-    }
-
-    // Eliminar reserva por documento y fecha de check-in (formateada como string)
     public boolean eliminarReserva(String documento, String checkIn) {
-        List<Reserva> reservas = obtenerTodasLasReservas();
-        boolean eliminado = reservas.removeIf(r -> r.getDocumento().equals(documento)
-                && formatearFecha(r.getCheckIn()).equals(checkIn));
-        if (eliminado) {
-            guardarReservas(reservas);
-        }
+        ListaReservas lista = cargarLista();
+        boolean eliminado = lista.eliminar(documento, checkIn);
+        if (eliminado) guardarLista(lista);
         return eliminado;
     }
 
-    // Editar una reserva existente
-    public void editarReserva(String documentoAntiguo, Date checkInAntiguo, Reserva nuevaReserva) {
-        List<Reserva> reservas = obtenerTodasLasReservas();
-
-        for (int i = 0; i < reservas.size(); i++) {
-            Reserva r = reservas.get(i);
-            if (r.getDocumento().equals(documentoAntiguo)
-                    && formatearFecha(r.getCheckIn()).equals(checkInAntiguo)) {
-                reservas.set(i, nuevaReserva);
-                guardarReservas(reservas);
-                return;
-            }
-        }
+    public List<Reserva> obtenerTodas() {
+        return cargarLista().convertirListaJava();
     }
 
-    // Formatear fecha para comparación
-    private String formatearFecha(Date fecha) {
-        if (fecha == null) return "";
-        return new java.text.SimpleDateFormat("yyyy-MM-dd").format(fecha);
-    }
-
-    public boolean habitacionYaReservada(String numeroHabitacion, Date fechaCheckIn, Date fechaCheckOut) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Reserva> obtenerReservasPorDocumento(String doc) {
+        List<Reserva> todas = obtenerTodas();
+        return todas.stream().filter(r -> r.getDocumento().equals(doc)).toList();
     }
 }
-
-
-
-
-
-
-  
-
-
-
-
-
-
