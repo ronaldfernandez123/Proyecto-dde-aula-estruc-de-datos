@@ -4,10 +4,14 @@
  */
 package UI;
 
-import Charts.GraficoDashboard;
-import Charts.GraficoPastelDashboard;
-import org.jfree.chart.ChartPanel;
-import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import UI.Panels.PanelDashboard;
+import UI.Panels.PanelReservas;
+import UI.Panels.PanelUsuarios;
+import UI.Panels.PanelHabitaciones;
+import UI.Panels.PanelReportes;
+
+
 
 
 /**
@@ -15,6 +19,8 @@ import java.awt.BorderLayout;
  * @author Administrator
  */
 public class Ventana_Admin extends javax.swing.JFrame {
+    
+    private CardLayout cardLayout;
 
     /**
      * Creates new form Ventana_Admin
@@ -22,25 +28,27 @@ public class Ventana_Admin extends javax.swing.JFrame {
     public Ventana_Admin() {
         initComponents();
         
-    GraficoDashboard gd = new GraficoDashboard();
-    ChartPanel cp = gd.crearPanelGraficoReservas();
+       // Crear instancias de cada panel
+    PanelDashboard dashboard = new PanelDashboard();
+    PanelReservas reservas = new PanelReservas();
+    PanelUsuarios usuarios = new PanelUsuarios();
+    PanelHabitaciones habitaciones = new PanelHabitaciones();
+    PanelReportes reportes = new PanelReportes();
 
-    panelgrafico.setLayout(new BorderLayout());
-    panelgrafico.add(cp, BorderLayout.CENTER);
-    panelgrafico.validate();
-    
-    GraficoPastelDashboard gpd = new GraficoPastelDashboard();
-    ChartPanel cpPastel = gpd.crearPanelGraficoPastel();
+    // Configurar CardLayout
+    cardLayout = new CardLayout();
+    panelContenedor.setLayout(cardLayout);
 
-    panelgrafico2.setLayout(new BorderLayout());
-    panelgrafico2.add(cpPastel, BorderLayout.CENTER);
-    panelgrafico2.validate();
+    // Agregar paneles
+    panelContenedor.add(dashboard, "dashboard");
+    panelContenedor.add(reservas, "reservas");
+    panelContenedor.add(usuarios, "usuarios");
+    panelContenedor.add(habitaciones, "habitaciones");
+    panelContenedor.add(reportes, "reportes");
 
-
-
-        
-        
-    }
+    // Mostrar por defecto el dashboard
+    cardLayout.show(panelContenedor, "dashboard");
+}
     
    
 
@@ -54,215 +62,166 @@ public class Ventana_Admin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        lblUsuariosNum = new javax.swing.JLabel();
-        lblUsuariosTitulo = new javax.swing.JLabel();
-        lblRegistrosNum = new javax.swing.JLabel();
-        lblRegistrosTitulo = new javax.swing.JLabel();
-        lblingresosNum = new javax.swing.JLabel();
-        lblIngresosTitulo = new javax.swing.JLabel();
-        lblUsuariosNuevosNum = new javax.swing.JLabel();
-        lblUsuariosNuevosTitulo = new javax.swing.JLabel();
-        panelgrafico = new javax.swing.JPanel();
-        panelgrafico2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        PanelDashboard = new javax.swing.JButton();
-        PanelReservas = new javax.swing.JButton();
-        PanelHabitaciones = new javax.swing.JButton();
-        PanelUsuarios = new javax.swing.JButton();
-        PanelReportes = new javax.swing.JButton();
+        btnDashboard = new javax.swing.JButton();
+        btnReservas = new javax.swing.JButton();
+        btnHabitaciones = new javax.swing.JButton();
+        btnUsuarios = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
+        panelContenedor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblUsuariosNum.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        lblUsuariosNum.setText("   0");
-        jPanel2.add(lblUsuariosNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 80, 80));
-
-        lblUsuariosTitulo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblUsuariosTitulo.setText("Usuarios registrados");
-        jPanel2.add(lblUsuariosTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 110, -1));
-
-        lblRegistrosNum.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        lblRegistrosNum.setText("   0");
-        jPanel2.add(lblRegistrosNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 80, 80));
-
-        lblRegistrosTitulo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblRegistrosTitulo.setText("Total Registros");
-        jPanel2.add(lblRegistrosTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
-
-        lblingresosNum.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        lblingresosNum.setText("   0");
-        jPanel2.add(lblingresosNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 80, 80));
-
-        lblIngresosTitulo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblIngresosTitulo.setText("Total Ingresos");
-        jPanel2.add(lblIngresosTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, -1, -1));
-
-        lblUsuariosNuevosNum.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        lblUsuariosNuevosNum.setText("   0");
-        jPanel2.add(lblUsuariosNuevosNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 80, 80));
-
-        lblUsuariosNuevosTitulo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblUsuariosNuevosTitulo.setText("Usuarios Nuevos del Mes");
-        jPanel2.add(lblUsuariosNuevosTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, -1, -1));
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 530, 120));
-
-        panelgrafico.setBackground(new java.awt.Color(255, 255, 255));
-        panelgrafico.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                panelgraficoAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        panelgrafico.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(panelgrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 270, 270));
-
-        panelgrafico2.setBackground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(panelgrafico2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, 260, 270));
-
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        PanelDashboard.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        PanelDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/home (1).png"))); // NOI18N
-        PanelDashboard.setText("  Dashboard");
-        PanelDashboard.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        PanelDashboard.setContentAreaFilled(false);
-        PanelDashboard.setFocusPainted(false);
-        PanelDashboard.addActionListener(new java.awt.event.ActionListener() {
+        btnDashboard.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/home (1).png"))); // NOI18N
+        btnDashboard.setText("  Dashboard");
+        btnDashboard.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnDashboard.setContentAreaFilled(false);
+        btnDashboard.setFocusPainted(false);
+        btnDashboard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PanelDashboardActionPerformed(evt);
+                btnDashboardActionPerformed(evt);
             }
         });
-        jPanel4.add(PanelDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 130, 50));
+        jPanel4.add(btnDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 140, 50));
 
-        PanelReservas.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        PanelReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/restaurant.png"))); // NOI18N
-        PanelReservas.setText("    Reservas");
-        PanelReservas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        PanelReservas.setContentAreaFilled(false);
-        PanelReservas.setFocusPainted(false);
-        PanelReservas.addActionListener(new java.awt.event.ActionListener() {
+        btnReservas.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/restaurant.png"))); // NOI18N
+        btnReservas.setText("    Reservas");
+        btnReservas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnReservas.setContentAreaFilled(false);
+        btnReservas.setFocusPainted(false);
+        btnReservas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PanelReservasActionPerformed(evt);
+                btnReservasActionPerformed(evt);
             }
         });
-        jPanel4.add(PanelReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 140, 50));
+        jPanel4.add(btnReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 140, 50));
 
-        PanelHabitaciones.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        PanelHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bed.png"))); // NOI18N
-        PanelHabitaciones.setText(" Habitaciones");
-        PanelHabitaciones.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        PanelHabitaciones.setContentAreaFilled(false);
-        PanelHabitaciones.setFocusPainted(false);
-        PanelHabitaciones.addActionListener(new java.awt.event.ActionListener() {
+        btnHabitaciones.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bed.png"))); // NOI18N
+        btnHabitaciones.setText(" Habitaciones");
+        btnHabitaciones.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnHabitaciones.setContentAreaFilled(false);
+        btnHabitaciones.setFocusPainted(false);
+        btnHabitaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PanelHabitacionesActionPerformed(evt);
+                btnHabitacionesActionPerformed(evt);
             }
         });
-        jPanel4.add(PanelHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 140, 50));
+        jPanel4.add(btnHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 140, 50));
 
-        PanelUsuarios.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        PanelUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/users_group_customers_clients_icon-icons.com_72448.png"))); // NOI18N
-        PanelUsuarios.setText("   Usuarios");
-        PanelUsuarios.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        PanelUsuarios.setContentAreaFilled(false);
-        PanelUsuarios.setFocusPainted(false);
-        PanelUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        btnUsuarios.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/users_group_customers_clients_icon-icons.com_72448.png"))); // NOI18N
+        btnUsuarios.setText("   Usuarios");
+        btnUsuarios.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnUsuarios.setContentAreaFilled(false);
+        btnUsuarios.setFocusPainted(false);
+        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PanelUsuariosActionPerformed(evt);
+                btnUsuariosActionPerformed(evt);
             }
         });
-        jPanel4.add(PanelUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 140, 50));
+        jPanel4.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 140, 50));
 
-        PanelReportes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        PanelReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chart.png"))); // NOI18N
-        PanelReportes.setText("   Reportes");
-        PanelReportes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        PanelReportes.setContentAreaFilled(false);
-        PanelReportes.setFocusPainted(false);
-        PanelReportes.addActionListener(new java.awt.event.ActionListener() {
+        btnReportes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chart.png"))); // NOI18N
+        btnReportes.setText("   Reportes");
+        btnReportes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnReportes.setContentAreaFilled(false);
+        btnReportes.setFocusPainted(false);
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PanelReportesActionPerformed(evt);
+                btnReportesActionPerformed(evt);
             }
         });
-        jPanel4.add(PanelReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 140, 50));
+        jPanel4.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 140, 50));
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 450));
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 420));
+
+        panelContenedor.setBackground(new java.awt.Color(204, 204, 204));
+        panelContenedor.setLayout(new java.awt.CardLayout());
+        getContentPane().add(panelContenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 640, 420));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void PanelDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PanelDashboardActionPerformed
+    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         // TODO add your handling code here:
-        PanelDashboard.setBorder(null);             // elimina cualquier borde
-        PanelDashboard.setBorderPainted(false);     // evita que el borde se pinte
-        PanelDashboard.setFocusPainted(false);      // elimina el borde azul de enfoque
-        PanelDashboard.setContentAreaFilled(false); // fondo transparente
-        PanelDashboard.setOpaque(false);            // evita que se pinte un fondo solido
-        PanelDashboard.setFocusable(false);         // evita que reciba enfoque y muestre líneas
-        PanelDashboard.setFocusable(false);
+        
+        btnDashboard.addActionListener(e -> cardLayout.show(panelContenedor, "dashboard"));
+       
+        btnDashboard.setBorder(null);             // elimina cualquier borde
+        btnDashboard.setBorderPainted(false);     // evita que el borde se pinte
+        btnDashboard.setFocusPainted(false);      // elimina el borde azul de enfoque
+        btnDashboard.setContentAreaFilled(false); // fondo transparente
+        btnDashboard.setOpaque(false);            // evita que se pinte un fondo solido
+        btnDashboard.setFocusable(false);         // evita que reciba enfoque y muestre líneas
+        btnDashboard.setFocusable(false);
 
 
 
-    }//GEN-LAST:event_PanelDashboardActionPerformed
+    }//GEN-LAST:event_btnDashboardActionPerformed
 
-    private void PanelReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PanelReservasActionPerformed
+    private void btnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservasActionPerformed
         // TODO add your handling code here:
-        PanelReservas.setBorder(null);             // elimina cualquier borde
-        PanelReservas.setBorderPainted(false);     // evita que el borde se pinte
-        PanelReservas.setFocusPainted(false);      // elimina el borde azul de enfoque
-        PanelReservas.setContentAreaFilled(false); // fondo transparente
-        PanelReservas.setOpaque(false);            // evita que se pinte un fondo solido
-        PanelReservas.setFocusable(false);         // evita que reciba enfoque y muestre líneas
-        PanelReservas.setFocusable(false);
-    }//GEN-LAST:event_PanelReservasActionPerformed
+        
+        btnReservas.addActionListener(e -> cardLayout.show(panelContenedor, "reservas"));
+        
+        btnReservas.setBorder(null);             // elimina cualquier borde
+        btnReservas.setBorderPainted(false);     // evita que el borde se pinte
+        btnReservas.setFocusPainted(false);      // elimina el borde azul de enfoque
+        btnReservas.setContentAreaFilled(false); // fondo transparente
+        btnReservas.setOpaque(false);            // evita que se pinte un fondo solido
+        btnReservas.setFocusable(false);         // evita que reciba enfoque y muestre líneas
+        btnReservas.setFocusable(false);
+    }//GEN-LAST:event_btnReservasActionPerformed
 
-    private void PanelHabitacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PanelHabitacionesActionPerformed
+    private void btnHabitacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabitacionesActionPerformed
         // TODO add your handling code here:
-        PanelHabitaciones.setBorder(null);             // elimina cualquier borde
-        PanelHabitaciones.setBorderPainted(false);     // evita que el borde se pinte
-        PanelHabitaciones.setFocusPainted(false);      // elimina el borde azul de enfoque
-        PanelHabitaciones.setContentAreaFilled(false); // fondo transparente
-        PanelHabitaciones.setOpaque(false);            // evita que se pinte un fondo solido
-        PanelHabitaciones.setFocusable(false);         // evita que reciba enfoque y muestre líneas
-        PanelHabitaciones.setFocusable(false);
-    }//GEN-LAST:event_PanelHabitacionesActionPerformed
+        
+        btnHabitaciones.addActionListener(e -> cardLayout.show(panelContenedor, "habitaciones"));
+        
+        btnHabitaciones.setBorder(null);             // elimina cualquier borde
+        btnHabitaciones.setBorderPainted(false);     // evita que el borde se pinte
+        btnHabitaciones.setFocusPainted(false);      // elimina el borde azul de enfoque
+        btnHabitaciones.setContentAreaFilled(false); // fondo transparente
+        btnHabitaciones.setOpaque(false);            // evita que se pinte un fondo solido
+        btnHabitaciones.setFocusable(false);         // evita que reciba enfoque y muestre líneas
+        btnHabitaciones.setFocusable(false);
+    }//GEN-LAST:event_btnHabitacionesActionPerformed
 
-    private void PanelUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PanelUsuariosActionPerformed
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         // TODO add your handling code here:
-        PanelUsuarios.setBorder(null);             // elimina cualquier borde
-        PanelUsuarios.setBorderPainted(false);     // evita que el borde se pinte
-        PanelUsuarios.setFocusPainted(false);      // elimina el borde azul de enfoque
-        PanelUsuarios.setContentAreaFilled(false); // fondo transparente
-        PanelUsuarios.setOpaque(false);            // evita que se pinte un fondo solido
-        PanelUsuarios.setFocusable(false);         // evita que reciba enfoque y muestre líneas
-        PanelUsuarios.setFocusable(false);
-    }//GEN-LAST:event_PanelUsuariosActionPerformed
+        
+        btnUsuarios.addActionListener(e -> cardLayout.show(panelContenedor, "usuarios"));
+        
+        btnUsuarios.setBorder(null);             // elimina cualquier borde
+        btnUsuarios.setBorderPainted(false);     // evita que el borde se pinte
+        btnUsuarios.setFocusPainted(false);      // elimina el borde azul de enfoque
+        btnUsuarios.setContentAreaFilled(false); // fondo transparente
+        btnUsuarios.setOpaque(false);            // evita que se pinte un fondo solido
+        btnUsuarios.setFocusable(false);         // evita que reciba enfoque y muestre líneas
+        btnUsuarios.setFocusable(false);
+    }//GEN-LAST:event_btnUsuariosActionPerformed
 
-    private void PanelReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PanelReportesActionPerformed
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
-        PanelReportes.setBorder(null);             // elimina cualquier borde
-        PanelReportes.setBorderPainted(false);     // evita que el borde se pinte
-        PanelReportes.setFocusPainted(false);      // elimina el borde azul de enfoque
-        PanelReportes.setContentAreaFilled(false); // fondo transparente
-        PanelReportes.setOpaque(false);            // evita que se pinte un fondo solido
-        PanelReportes.setFocusable(false);         // evita que reciba enfoque y muestre líneas
-        PanelReportes.setFocusable(false);
-    }//GEN-LAST:event_PanelReportesActionPerformed
-
-    private void panelgraficoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_panelgraficoAncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_panelgraficoAncestorAdded
+        
+        btnReportes.addActionListener(e -> cardLayout.show(panelContenedor, "reportes"));
+        
+        btnReportes.setBorder(null);             // elimina cualquier borde
+        btnReportes.setBorderPainted(false);     // evita que el borde se pinte
+        btnReportes.setFocusPainted(false);      // elimina el borde azul de enfoque
+        btnReportes.setContentAreaFilled(false); // fondo transparente
+        btnReportes.setOpaque(false);            // evita que se pinte un fondo solido
+        btnReportes.setFocusable(false);         // evita que reciba enfoque y muestre líneas
+        btnReportes.setFocusable(false);
+    }//GEN-LAST:event_btnReportesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,22 +259,12 @@ public class Ventana_Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton PanelDashboard;
-    private javax.swing.JButton PanelHabitaciones;
-    private javax.swing.JButton PanelReportes;
-    private javax.swing.JButton PanelReservas;
-    private javax.swing.JButton PanelUsuarios;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton btnDashboard;
+    private javax.swing.JButton btnHabitaciones;
+    private javax.swing.JButton btnReportes;
+    private javax.swing.JButton btnReservas;
+    private javax.swing.JButton btnUsuarios;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JLabel lblIngresosTitulo;
-    private javax.swing.JLabel lblRegistrosNum;
-    private javax.swing.JLabel lblRegistrosTitulo;
-    private javax.swing.JLabel lblUsuariosNuevosNum;
-    private javax.swing.JLabel lblUsuariosNuevosTitulo;
-    private javax.swing.JLabel lblUsuariosNum;
-    private javax.swing.JLabel lblUsuariosTitulo;
-    private javax.swing.JLabel lblingresosNum;
-    private javax.swing.JPanel panelgrafico;
-    private javax.swing.JPanel panelgrafico2;
+    private javax.swing.JPanel panelContenedor;
     // End of variables declaration//GEN-END:variables
 }
