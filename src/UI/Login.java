@@ -4,7 +4,6 @@
  */
 package UI;
 
-
 import Datos.UsuarioDAO;
 import Modelo.Usuario;
 import java.sql.ResultSet;
@@ -36,6 +35,14 @@ public class Login extends javax.swing.JFrame {
 
         jTextField1 = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        tx_usuario = new javax.swing.JTextField();
+        tx_contra = new javax.swing.JPasswordField();
+        Iniciar_sesion = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -53,18 +60,88 @@ public class Login extends javax.swing.JFrame {
         tx_contraseña = new javax.swing.JPasswordField();
         OBLIGACION = new javax.swing.JLabel();
         loginresgist = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        tx_usuario = new javax.swing.JTextField();
-        tx_contra = new javax.swing.JPasswordField();
-        Iniciar_sesion = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/persona.png"))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user2.png"))); // NOI18N
+        jLabel2.setText("Usuario");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/password.png"))); // NOI18N
+        jLabel3.setText("Contraseña");
+
+        Iniciar_sesion.setBackground(new java.awt.Color(0, 204, 255));
+        Iniciar_sesion.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        Iniciar_sesion.setForeground(new java.awt.Color(255, 255, 255));
+        Iniciar_sesion.setText("Iniciar sesiòn");
+        Iniciar_sesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Iniciar_sesionActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(255, 153, 153));
+        jButton2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar-sesion.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tx_contra, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                    .addComponent(tx_usuario))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton2))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(147, Short.MAX_VALUE)
+                .addComponent(Iniciar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(120, 120, 120))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(194, 194, 194))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jButton2)
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tx_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tx_contra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(Iniciar_sesion)
+                .addGap(80, 80, 80))
+        );
+
+        jTabbedPane1.addTab("Iniciar sesion", jPanel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Registrar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Black", 1, 18))); // NOI18N
 
@@ -206,84 +283,6 @@ public class Login extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("registrar", jPanel2);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/persona.png"))); // NOI18N
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user2.png"))); // NOI18N
-        jLabel2.setText("Usuario");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/password.png"))); // NOI18N
-        jLabel3.setText("Contraseña");
-
-        Iniciar_sesion.setBackground(new java.awt.Color(0, 204, 255));
-        Iniciar_sesion.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        Iniciar_sesion.setForeground(new java.awt.Color(255, 255, 255));
-        Iniciar_sesion.setText("Iniciar sesiòn");
-        Iniciar_sesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Iniciar_sesionActionPerformed(evt);
-            }
-        });
-
-        jButton2.setBackground(new java.awt.Color(255, 153, 153));
-        jButton2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrar-sesion.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tx_contra, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                    .addComponent(tx_usuario))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton2))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(147, Short.MAX_VALUE)
-                .addComponent(Iniciar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(194, 194, 194))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton2)
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tx_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tx_contra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(Iniciar_sesion)
-                .addGap(80, 80, 80))
-        );
-
-        jTabbedPane1.addTab("Iniciar sesion", jPanel1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -299,51 +298,51 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.exit(0);   
+        System.exit(0);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void Iniciar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Iniciar_sesionActionPerformed
-String correo = tx_usuario.getText().trim();
-String contraseña = new String(tx_contra.getPassword());
+        String correo = tx_usuario.getText().trim();
+        String contraseña = new String(tx_contra.getPassword());
 
-if (correo.isEmpty() || contraseña.isEmpty()) {
-    JOptionPane.showMessageDialog(this, "Debe ingresar correo y contraseña.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-    return;
-}
-
-UsuarioDAO usuarioDAO = new UsuarioDAO();
-List<Usuario> usuarios = usuarioDAO.leerUsuarios();
-
-boolean encontrado = false;
-
-for (Usuario usuario : usuarios) {
-    if (correo.equals(usuario.getEmail()) && contraseña.equals(usuario.getContraseña())) {
-        encontrado = true;
-        JOptionPane.showMessageDialog(this, "¡Bienvenido, " + usuario.getNombres() + "!");
-
-        String cargo = usuario.getCargo();
-
-        if (cargo.equalsIgnoreCase("Usuario")) {
-            // Abrir la ventana del administrador
-                new Principal().setVisible(true);
-        } else if (cargo.equalsIgnoreCase("Administrador")) {
-            // Abrir la ventana del Usuario
-                new MisReservas().setVisible(true);
-        } else {
-            // Si hay otros cargos, puedes manejarlos aquí
-            JOptionPane.showMessageDialog(this, "Rol no reconocido: " + cargo, "Error", JOptionPane.ERROR_MESSAGE);
+        if (correo.isEmpty() || contraseña.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar correo y contraseña.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
-        // Cierra la ventana de login (opcional)
-        this.dispose();
-        break;
-    }
-}
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        List<Usuario> usuarios = usuarioDAO.leerUsuarios();
 
-if (!encontrado) {
-    JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
-}
+        boolean encontrado = false;
+
+        for (Usuario usuario : usuarios) {
+            if (correo.equals(usuario.getEmail()) && contraseña.equals(usuario.getContraseña())) {
+                encontrado = true;
+                JOptionPane.showMessageDialog(this, "¡Bienvenido, " + usuario.getNombres() + "!");
+
+                String cargo = usuario.getCargo();
+
+                if (cargo.equalsIgnoreCase("Usuario")) {
+                    // Abrir la ventana del administrador
+                    new Principal().setVisible(true);
+                } else if (cargo.equalsIgnoreCase("Administrador")) {
+                    // Abrir la ventana del Usuario
+                    new Ventana_Admin().setVisible(true);
+                } else {
+                    // Si hay otros cargos, puedes manejarlos aquí
+                    JOptionPane.showMessageDialog(this, "Rol no reconocido: " + cargo, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+                // Cierra la ventana de login (opcional)
+                this.dispose();
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_Iniciar_sesionActionPerformed
@@ -353,57 +352,56 @@ if (!encontrado) {
     }//GEN-LAST:event_tx_nroDocumentoActionPerformed
 
     private void loginresgistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginresgistActionPerformed
-                                      
-    // 1) Leer valores de los campos
-    String nombres        = tx_nombres.getText().trim();
-    String apellidos      = tx_apellidos.getText().trim();
-    String tipoDocumento  = tx_documento.getSelectedItem().toString();
-    String nroDocumento   = tx_nroDocumento.getText().trim();
-    String email          = tx_email.getText().trim();
-    String cargo          = tx_cargo.getSelectedItem().toString();
-    String contraseña     = new String(tx_contraseña.getPassword()).trim();
 
-    // 2) Validar que no haya campos vacíos
-    if (nombres.isEmpty() || apellidos.isEmpty() || tipoDocumento.equals("Seleccionar")
-        || nroDocumento.isEmpty() || email.isEmpty() || cargo.equals("Seleccionar")
-        || contraseña.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.",
-                                      "Error de validación", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        // 1) Leer valores de los campos
+        String nombres = tx_nombres.getText().trim();
+        String apellidos = tx_apellidos.getText().trim();
+        String tipoDocumento = tx_documento.getSelectedItem().toString();
+        String nroDocumento = tx_nroDocumento.getText().trim();
+        String email = tx_email.getText().trim();
+        String cargo = tx_cargo.getSelectedItem().toString();
+        String contraseña = new String(tx_contraseña.getPassword()).trim();
 
-    // 3) Crear objeto Usuario
-    Usuario nuevo = new Usuario(nombres,
-                                apellidos,
-                                tipoDocumento,
-                                nroDocumento,
-                                email,
-                                cargo,
-                                contraseña);
+        // 2) Validar que no haya campos vacíos
+        if (nombres.isEmpty() || apellidos.isEmpty() || tipoDocumento.equals("Seleccionar")
+                || nroDocumento.isEmpty() || email.isEmpty() || cargo.equals("Seleccionar")
+                || contraseña.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.",
+                    "Error de validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    // 4) Guardar con UsuarioDAO
-    try {
-        UsuarioDAO dao = new UsuarioDAO();
-        dao.guardarUsuario(nuevo);
-        JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.",
-                                      "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        // 3) Crear objeto Usuario
+        Usuario nuevo = new Usuario(nombres,
+                apellidos,
+                tipoDocumento,
+                nroDocumento,
+                email,
+                cargo,
+                contraseña);
 
-        // Opcional: limpiar campos
-        tx_nombres.setText("");
-        tx_apellidos.setText("");
-        tx_documento.setSelectedIndex(0);
-        tx_nroDocumento.setText("");
-        tx_email.setText("");
-        tx_cargo.setSelectedIndex(0);
-        tx_contraseña.setText("");
+        // 4) Guardar con UsuarioDAO
+        try {
+            UsuarioDAO dao = new UsuarioDAO();
+            dao.guardarUsuario(nuevo);
+            JOptionPane.showMessageDialog(this, "Usuario registrado correctamente.",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error al guardar el usuario:\n" + ex.getMessage(),
-                                      "Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    }
-      
-        
+            // Opcional: limpiar campos
+            tx_nombres.setText("");
+            tx_apellidos.setText("");
+            tx_documento.setSelectedIndex(0);
+            tx_nroDocumento.setText("");
+            tx_email.setText("");
+            tx_cargo.setSelectedIndex(0);
+            tx_contraseña.setText("");
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el usuario:\n" + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+
 // TODO add your handling code here:
     }//GEN-LAST:event_loginresgistActionPerformed
 

@@ -71,7 +71,7 @@ public class Barranquilla extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setText("Hotel Barranquilla plaza ");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(150, 50, 190, 19);
+        jLabel3.setBounds(150, 50, 190, 20);
 
         ReservarBPlaza.setBackground(new java.awt.Color(0, 204, 204));
         ReservarBPlaza.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -82,7 +82,7 @@ public class Barranquilla extends javax.swing.JFrame {
             }
         });
         jPanel2.add(ReservarBPlaza);
-        ReservarBPlaza.setBounds(565, 50, 110, 26);
+        ReservarBPlaza.setBounds(565, 50, 110, 27);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(10, 10, 690, 130);
@@ -98,7 +98,7 @@ public class Barranquilla extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel5.setText("Hotel Windsor Barranquilla ");
         jPanel3.add(jLabel5);
-        jLabel5.setBounds(150, 50, 210, 19);
+        jLabel5.setBounds(150, 50, 210, 20);
 
         ReservarWindsor.setBackground(new java.awt.Color(0, 204, 204));
         ReservarWindsor.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -125,7 +125,7 @@ public class Barranquilla extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel7.setText("Country International Hotel");
         jPanel4.add(jLabel7);
-        jLabel7.setBounds(150, 60, 210, 19);
+        jLabel7.setBounds(150, 60, 210, 20);
 
         ReservarCountry.setBackground(new java.awt.Color(0, 204, 204));
         ReservarCountry.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -136,7 +136,7 @@ public class Barranquilla extends javax.swing.JFrame {
             }
         });
         jPanel4.add(ReservarCountry);
-        ReservarCountry.setBounds(575, 50, 100, 26);
+        ReservarCountry.setBounds(575, 50, 100, 27);
 
         jPanel1.add(jPanel4);
         jPanel4.setBounds(10, 290, 690, 130);
@@ -147,7 +147,7 @@ public class Barranquilla extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel1.setText("Seleccione El Hotel Donde Desea Hacer Su Reserva");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(120, 0, 510, 26);
+        jLabel1.setBounds(120, 0, 510, 25);
 
         jButton4.setBackground(new java.awt.Color(0, 204, 255));
         jButton4.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
