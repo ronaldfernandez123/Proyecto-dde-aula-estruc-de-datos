@@ -72,6 +72,7 @@ public class RegisTuristaHotel extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         Guardar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -94,18 +95,18 @@ public class RegisTuristaHotel extends javax.swing.JFrame {
         txtNombres.setBackground(new java.awt.Color(204, 204, 204));
         txtNombres.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jPanel1.add(txtNombres);
-        txtNombres.setBounds(20, 40, 180, 23);
+        txtNombres.setBounds(20, 40, 180, 22);
 
         txtApellidos.setEditable(false);
         txtApellidos.setBackground(new java.awt.Color(204, 204, 204));
         txtApellidos.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jPanel1.add(txtApellidos);
-        txtApellidos.setBounds(20, 80, 180, 23);
+        txtApellidos.setBounds(20, 80, 180, 22);
 
         txtDocumento.setBackground(new java.awt.Color(204, 204, 204));
         txtDocumento.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jPanel1.add(txtDocumento);
-        txtDocumento.setBounds(20, 170, 180, 23);
+        txtDocumento.setBounds(20, 170, 180, 22);
 
         cbxLugar.setBackground(new java.awt.Color(204, 204, 204));
         cbxLugar.setFont(new java.awt.Font("Segoe UI Historic", 0, 14)); // NOI18N
@@ -229,6 +230,10 @@ public class RegisTuristaHotel extends javax.swing.JFrame {
         });
         getContentPane().add(Guardar);
         Guardar.setBounds(290, 310, 90, 27);
+
+        jButton2.setText("Reportar error");
+        getContentPane().add(jButton2);
+        jButton2.setBounds(470, 340, 103, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -354,6 +359,7 @@ public class RegisTuristaHotel extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxNumeroHabitacion;
     private javax.swing.JComboBox<String> cbxTipoId;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private com.toedter.calendar.JDateChooser jCalendarCheckIn;
     private com.toedter.calendar.JDateChooser jCalendarCheckOut;

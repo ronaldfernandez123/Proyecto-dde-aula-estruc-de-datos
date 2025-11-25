@@ -328,7 +328,7 @@ public class Login extends javax.swing.JFrame {
                     new Principal().setVisible(true);
                 } else if (cargo.equalsIgnoreCase("Administrador")) {
                     // Abrir la ventana del Usuario
-                    new Ventana_Admin().setVisible(true);
+                                    new MisReservas().setVisible(true);
                 } else {
                     // Si hay otros cargos, puedes manejarlos aquí
                     JOptionPane.showMessageDialog(this, "Rol no reconocido: " + cargo, "Error", JOptionPane.ERROR_MESSAGE);

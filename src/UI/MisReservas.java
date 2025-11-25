@@ -261,17 +261,17 @@ private void editarReservaSeleccionada() {
         txtNombres.setBackground(new java.awt.Color(204, 204, 204));
         txtNombres.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jPanel2.add(txtNombres);
-        txtNombres.setBounds(20, 40, 180, 23);
+        txtNombres.setBounds(20, 40, 180, 22);
 
         txtApellidos.setBackground(new java.awt.Color(204, 204, 204));
         txtApellidos.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jPanel2.add(txtApellidos);
-        txtApellidos.setBounds(20, 80, 180, 23);
+        txtApellidos.setBounds(20, 80, 180, 22);
 
         txtDocumento.setBackground(new java.awt.Color(204, 204, 204));
         txtDocumento.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jPanel2.add(txtDocumento);
-        txtDocumento.setBounds(20, 170, 180, 23);
+        txtDocumento.setBounds(20, 170, 180, 22);
 
         cbxLugar.setBackground(new java.awt.Color(204, 204, 204));
         cbxLugar.setFont(new java.awt.Font("Segoe UI Historic", 0, 14)); // NOI18N
@@ -385,6 +385,11 @@ private void editarReservaSeleccionada() {
         jButton2.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 51, 51));
         jButton2.setText("Vaciar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
         jButton2.setBounds(190, 310, 90, 30);
 
@@ -464,6 +469,12 @@ private void editarReservaSeleccionada() {
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reservas.png"))); // NOI18N
 
         jLabel14.setText("Buscar Reserva:");
+
+        BuscarIDResr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarIDResrActionPerformed(evt);
+            }
+        });
 
         buscar.setText("Buscar");
         buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -914,6 +925,26 @@ private String safeToString(DefaultTableModel model, int fila, int columna) {
     }
         // TODO add your handling code here:
     }//GEN-LAST:event_buscarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+            txtNombres.setText("");
+    txtApellidos.setText("");
+    txtDocumento.setText("");
+    txtCantidadPersonas.setText("");
+    txtHabitaciones.setText("");
+    cbxTipoId.setSelectedIndex(-1);
+    cbxLugar.setSelectedIndex(-1);
+    cbxNumeroHabitacion.setSelectedIndex(-1);
+    jCalendarCheckIn.setDate(null);
+    jCalendarCheckOut.setDate(null);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void BuscarIDResrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarIDResrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscarIDResrActionPerformed
 
     /**
      * @param args the command line arguments
